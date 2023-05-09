@@ -7,8 +7,8 @@
 :warning: Work in progress! :warning:
 
 rustlink is a set of tools to program STM32 devices:
-- `st-info`: chip and device information tool
-- `st-flash`: programmer and flash manipulation tool
+- `rst-info`: chip and device information tool
+- `rst-flash`: programmer and flash manipulation tool
 
 ## Installation from source
 
@@ -30,4 +30,4 @@ $ cargo build --release
 $ cargo install --path .
 ```
 
-which will build `st-info` and `st-flash` executables and install them in `<your-home>/.cargo/bin/`.
+which will build `rst-info` and `rst-flash` executables and install them in `<your-home>/.cargo/bin/`.
