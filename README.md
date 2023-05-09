@@ -5,4 +5,6 @@
 
 :warning: Work in progress! :warning:
 
-rustlink is a set of tools to program STM32 devices. 
+rustlink is a set of tools to program STM32 devices:
+- `st-info`: chip and device information tool
+- `st-flash`: programmer and flash manipulation tool
