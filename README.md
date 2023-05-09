@@ -1,2 +1,5 @@
 # rustlink
-STM32 programming toolset written in Rust
+
+:warning: Work in progress! :warning:
+
+rustlink is a set of tools to program STM32 devices. 
