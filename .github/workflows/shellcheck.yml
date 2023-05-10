@@ -26,4 +26,6 @@ jobs:
           sudo apt-get update -q
           sudo apt-get install -y shellcheck
       - name: Shellcheck
-        run: find . -type f -name '*.sh' -print0 | xargs -0 -n1 shellcheck
+        run: |
+          find . -type f -name '*.sh' -print0 | grep . || echo "no .sh file found"; exit 0
+          find . -type f -name '*.sh' -print0 | xargs -0 -n1 shellcheck
