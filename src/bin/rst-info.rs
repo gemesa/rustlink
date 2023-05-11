@@ -1,6 +1,8 @@
 use anyhow::{bail, Error, Result};
 use clap::{Parser, Subcommand};
 
+const VENDOR_ID_ST: u16 = 0x0483;
+
 /// Chip and device information tool
 
 #[derive(Parser)]
@@ -20,7 +22,7 @@ fn list_st_devices() {
     for device in rusb::devices().unwrap().iter() {
         let device_desc = device.device_descriptor().unwrap();
 
-        if device_desc.vendor_id() == 0x0483 {
+        if device_desc.vendor_id() == VENDOR_ID_ST {
             println!(
                 "Bus {:03} Device {:03} ID {:04x}:{:04x}",
                 device.bus_number(),
