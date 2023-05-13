@@ -116,10 +116,20 @@ fn print_device<T: UsbContext>(device_desc: &DeviceDescriptor, handle: &mut Opti
     println!(
         "  iSerialNumber        {:3} {}",
         device_desc.serial_number_string_index().unwrap_or(0),
-        handle.as_mut().map_or(String::new(), |h| h
-            .handle
-            .read_serial_number_string(h.language, device_desc, h.timeout)
-            .unwrap_or_default())
+        handle.as_mut().map_or(String::new(), |h| {
+            let serial_number_string = h
+                .handle
+                .read_serial_number_string(h.language, device_desc, h.timeout)
+                .unwrap_or_default();
+
+            let hex_values = serial_number_string
+                .chars()
+                .map(|c| format!("{:02X}", c as u8))
+                .collect::<Vec<_>>()
+                .join("");
+
+            hex_values
+        })
     );
 }
 
