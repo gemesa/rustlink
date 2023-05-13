@@ -9,3 +9,4 @@ edition = "2021"
 anyhow = "1.0.71"
 clap = {version = "4", features = ["derive"]}
 rusb = "0.9"
+usb-ids = "1.2023.0"
