@@ -24,7 +24,7 @@ fn list_stlink_devices() -> Result<()> {
     let mut probes = Probe::list_all();
 
     if probes.is_empty() {
-        bail!("No device found.")
+        bail!("no device found")
     }
 
     probes.retain(|probe| {
@@ -32,7 +32,7 @@ fn list_stlink_devices() -> Result<()> {
     });
 
     if probes.is_empty() {
-        bail!("No STLink device found.")
+        bail!("no STLink device found")
     }
 
     println!("The following devices were found:");
