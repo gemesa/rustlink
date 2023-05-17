@@ -3,6 +3,7 @@ use clap::{Parser, Subcommand};
 use probe_rs::Probe;
 
 const VENDOR_ID_ST: u16 = 0x0483;
+const PRODUCT_ID_STLINK: u16 = 0x3748;
 
 /// Chip and device information tool
 
@@ -15,21 +16,23 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
-    /// List ST devices
+    /// List STLink devices
     List,
 }
 
-fn list_st_devices() -> Result<()> {
+fn list_stlink_devices() -> Result<()> {
     let mut probes = Probe::list_all();
 
     if probes.is_empty() {
         bail!("No device found.")
     }
 
-    probes.retain(|probe| probe.vendor_id == VENDOR_ID_ST);
+    probes.retain(|probe| {
+        (probe.vendor_id == VENDOR_ID_ST) && (probe.product_id == PRODUCT_ID_STLINK)
+    });
 
     if probes.is_empty() {
-        bail!("No ST device found.")
+        bail!("No STLink device found.")
     }
 
     println!("The following devices were found:");
@@ -44,7 +47,7 @@ fn main() -> Result<(), Error> {
     let cli = Cli::parse();
 
     match &cli.command {
-        Some(Commands::List) => list_st_devices(),
+        Some(Commands::List) => list_stlink_devices(),
         None => bail!("unrecognized command"),
     }
 }
