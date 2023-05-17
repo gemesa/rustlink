@@ -20,7 +20,7 @@ The following tools are necessary for building:
 - `cargo` (>=1.68.2)
 - `rustc` (>=1.68.2)
 
-Both can be installed from the [official site](https://www.rust-lang.org/tools/install).
+Both can be installed from the [official Rust site](https://www.rust-lang.org/tools/install).
 
 ### How to build and install
 
