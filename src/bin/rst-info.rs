@@ -23,10 +23,6 @@ enum Commands {
 fn list_stlink_devices() -> Result<()> {
     let mut probes = Probe::list_all();
 
-    if probes.is_empty() {
-        bail!("no device found")
-    }
-
     probes.retain(|probe| {
         (probe.vendor_id == VENDOR_ID_ST) && (probe.product_id == PRODUCT_ID_STLINK)
     });
