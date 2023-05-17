@@ -35,10 +35,14 @@ fn list_stlink_devices() -> Result<()> {
         bail!("no STLink device found")
     }
 
-    println!("The following devices were found:");
-    for probe in probes {
-        println!("{:?}", probe);
-    }
+    probes.iter().enumerate().for_each(|(num, probe)| {
+        println!(
+            "[{}]: {} - serial: {}",
+            num,
+            probe.identifier,
+            probe.serial_number.clone().unwrap()
+        )
+    });
 
     Ok(())
 }
