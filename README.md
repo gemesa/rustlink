@@ -32,3 +32,11 @@ $ cargo install --path .
 ```
 
 which will build `rst-info` and `rst-flash` executables and install them in `<your-home>/.cargo/bin/`.
+
+## Quickstart
+
+```
+$ rst-info list
+The following devices were found:
+STLink V2 (VID: 0483, PID: 3748, Serial: 0123456789ABCDEF0123456789AB, StLink)
+```
