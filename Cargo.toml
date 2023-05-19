@@ -9,3 +9,4 @@ edition = "2021"
 anyhow = "1.0.71"
 clap = {version = "4", features = ["derive"]}
 probe-rs = "0.18.0"
+probe-rs-cli-util = "0.18.0"
