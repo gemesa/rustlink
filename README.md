@@ -23,7 +23,7 @@ With `rst-flash` you can choose by serial number which device to use:
 $ rst-info list
 [0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 [1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
-$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -p app.elf
+$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
      Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
  Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
     Finished in 0.209s      

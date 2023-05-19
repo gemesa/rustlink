@@ -37,7 +37,7 @@ enum Commands {
         format: DownloadFileType,
 
         /// The path to the file to be downloaded to the flash
-        #[clap(short, long)]
+        #[clap(short = 'f', long = "file")]
         path: String,
 
         /// Whether to erase the entire chip before downloading
