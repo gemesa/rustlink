@@ -49,6 +49,5 @@ $ rst-info list
 $ rst-flash download YYYYYYYYYYYYYYYYYYYYYYYYYYYY STM32F103C8 app.elf
      Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
  Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
-    Finished in 0.209s
-      
+    Finished in 0.209s      
 ```
