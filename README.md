@@ -21,11 +21,11 @@ With `rst-flash` you can choose by serial number which device to use:
 
 ```
 $ rst-info list
-[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
-$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
+[0]: STLink V2 - serial: AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+[1]: STLink V2 - serial: BBBBBBBBBBBBBBBBBBBBBBBBBBBB
+$ rst-flash download -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8 -f app.elf
     Finished in 0.179s
-$ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
+$ rst-flash reset -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8
 ```
 
 ## Installation from source
@@ -56,28 +56,28 @@ which will build `rst-info` and `rst-flash` executables and install them in `<yo
 
 ```
 $ rst-info list
-[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
+[0]: STLink V2 - serial: AAAAAAAAAAAAAAAAAAAAAAAAAAAA
+[1]: STLink V2 - serial: BBBBBBBBBBBBBBBBBBBBBBBBBBBB
 ```
 
 ### Download to flash and run
 
 ```
-$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
+$ rst-flash download -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8 -f app.elf
     Finished in 0.179s
-$ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
+$ rst-flash reset -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8
 ```
 
 ### Dump and erase memory
 
 ```
-$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf 
+$ rst-flash download -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8 -f app.elf 
     Finished in 0.191s
-$ rst-flash dump -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 0x0800_0000 1                   
+$ rst-flash dump -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8 0x0800_0000 1                   
 Addr 0x08000000: 0x20005000
 Read 1 words in 498.057µs
-$ rst-flash erase -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
-$ rst-flash dump -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 0x0800_0000 1
+$ rst-flash erase -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8
+$ rst-flash dump -s AAAAAAAAAAAAAAAAAAAAAAAAAAAA -t STM32F103C8 0x0800_0000 1
 Addr 0x08000000: 0xffffffff
 Read 1 words in 473.943µs
 ```
