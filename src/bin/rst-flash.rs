@@ -2,14 +2,15 @@ use anyhow::{bail, Context, Error, Result};
 use clap::{Parser, Subcommand};
 use probe_rs::{
     flashing::{erase_all, FileDownloadError},
-    Permissions, Probe,
+    MemoryInterface, Permissions, Probe,
 };
 use probe_rs_cli_util::{
     common_options::{CargoOptions, FlashOptions, ProbeOptions},
     flash::run_flash_download,
 };
 use std::fs::File;
-use std::path::Path;
+use std::time::Instant;
+use std::{num::ParseIntError, path::Path};
 
 /// Programmer and flash manipulation tool
 
@@ -34,6 +35,26 @@ enum Commands {
 
         #[clap(flatten)]
         shared: CoreOptions,
+    },
+    /// Dump memory from attached target
+    Dump {
+        /// Serial number of STLink
+        #[clap(short, long)]
+        serial: String,
+
+        /// Target chip
+        #[clap(short, long)]
+        target: String,
+
+        #[clap(flatten)]
+        shared: CoreOptions,
+
+        /// The address of the memory to dump from the target.
+        #[clap(value_parser = parse_u64)]
+        loc: u64,
+        /// The amount of memory (in words) to dump.
+        #[clap(value_parser = parse_u32)]
+        words: u32,
     },
     /// Download memory to attached target
     Download {
@@ -120,6 +141,54 @@ fn reset_target_of_device(serial: &str, target: &str, shared_options: &CoreOptio
     Ok(())
 }
 
+fn dump_memory(
+    serial: &str,
+    target: &str,
+    shared_options: &CoreOptions,
+    loc: u64,
+    words: u32,
+) -> Result<()> {
+    let probes = Probe::list_all();
+
+    let probe = probes
+        .into_iter()
+        .find(|probe| probe.serial_number == Some(serial.to_owned()));
+
+    if probe.is_none() {
+        bail!("no STLink device found with serial number {}", serial)
+    }
+
+    let probe = probe.unwrap().open()?;
+
+    let mut session = probe.attach(target, Permissions::default())?;
+
+    let mut data = vec![0_u32; words as usize];
+
+    // Start timer.
+    let instant = Instant::now();
+
+    // let loc = 220 * 1024;
+
+    let mut core = session.core(shared_options.core)?;
+
+    core.read_32(loc, data.as_mut_slice())?;
+    // Stop timer.
+    let elapsed = instant.elapsed();
+
+    // Print read values.
+    for word in 0..words {
+        println!(
+            "Addr 0x{:08x?}: 0x{:08x}",
+            loc + 4 * word as u64,
+            data[word as usize]
+        );
+    }
+    // Print stats.
+    println!("Read {words:?} words in {elapsed:?}");
+
+    Ok(())
+}
+
 #[allow(clippy::too_many_arguments)]
 fn download_program_fast(
     common: ProbeOptions,
@@ -194,6 +263,14 @@ pub(crate) struct CoreOptions {
     core: usize,
 }
 
+fn parse_u32(input: &str) -> Result<u32, ParseIntError> {
+    parse_int::parse(input)
+}
+
+fn parse_u64(input: &str) -> Result<u64, ParseIntError> {
+    parse_int::parse(input)
+}
+
 fn main() -> Result<(), Error> {
     let cli = Cli::parse();
 
@@ -203,6 +280,13 @@ fn main() -> Result<(), Error> {
             target,
             shared,
         }) => reset_target_of_device(&serial, &target, &shared),
+        Some(Commands::Dump {
+            serial,
+            target,
+            shared,
+            loc,
+            words,
+        }) => dump_memory(&serial, &target, &shared, loc, words),
         Some(Commands::Download {
             common,
             serial,

@@ -8,5 +8,6 @@ edition = "2021"
 [dependencies]
 anyhow = "1.0.71"
 clap = {version = "4", features = ["derive"]}
+parse_int = "0.6.0"
 probe-rs = "0.18.0"
 probe-rs-cli-util = "0.18.0"
