@@ -11,6 +11,7 @@ rustlink is a set of tools to program STM32 devices:
 - `rst-info`: chip and device information tool
 - `rst-flash`: programmer and flash manipulation tool
 
+<!-- markdown-link-check-disable-next-line -->
 The motivation behind these tools is that [probe-rs-cli](https://crates.io/crates/probe-rs-cli) can not handle multiple connected probes (devices):
 
 ```
