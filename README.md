@@ -52,7 +52,7 @@ which will build `rst-info` and `rst-flash` executables and install them in `<yo
 
 ## Examples
 
-#### List STlink devices
+### List STlink devices
 
 ```
 $ rst-info list
@@ -60,7 +60,7 @@ $ rst-info list
 [1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
 ```
 
-#### Download to flash and run
+### Download to flash and run
 
 ```
 $ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
@@ -68,7 +68,7 @@ $ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
 $ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
 ```
 
-#### Dump and erase memory
+### Dump and erase memory
 
 ```
 $ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf 
