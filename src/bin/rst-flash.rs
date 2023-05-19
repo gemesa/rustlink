@@ -45,7 +45,7 @@ enum Commands {
         chip_erase: bool,
 
         /// Whether to disable fancy progress reporting
-        #[clap(long)]
+        #[clap(short = 'q', long)]
         disable_progressbars: bool,
 
         /// Disable double-buffering when downloading flash.  If downloading times out, try this option.
