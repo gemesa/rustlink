@@ -25,9 +25,11 @@ enum Commands {
         common: ProbeOptions,
 
         /// Serial number of STLink
+        #[clap(short, long)]
         serial: String,
 
         /// Target chip
+        #[clap(short, long)]
         target: String,
 
         /// Format of the file to be downloaded to the flash. Possible values are case-insensitive.
@@ -35,6 +37,7 @@ enum Commands {
         format: DownloadFileType,
 
         /// The path to the file to be downloaded to the flash
+        #[clap(short, long)]
         path: String,
 
         /// Whether to erase the entire chip before downloading
