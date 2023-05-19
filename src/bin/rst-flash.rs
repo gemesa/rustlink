@@ -27,6 +27,9 @@ enum Commands {
         /// Serial number of STLink
         serial: String,
 
+        /// Target chip
+        target: String,
+
         /// Format of the file to be downloaded to the flash. Possible values are case-insensitive.
         #[clap(value_enum, ignore_case = true, default_value = "elf", long)]
         format: DownloadFileType,
@@ -48,9 +51,11 @@ enum Commands {
     },
 }
 
+#[allow(clippy::too_many_arguments)]
 fn download_program_fast(
     common: ProbeOptions,
     serial: &str,
+    target: &str,
     format: DownloadFileType,
     path: &str,
     do_chip_erase: bool,
@@ -69,7 +74,7 @@ fn download_program_fast(
 
     let probe = probe.unwrap().open()?;
 
-    let mut session = probe.attach("STM32F103C8", Permissions::default())?;
+    let mut session = probe.attach(target, Permissions::default())?;
 
     let mut file = match File::open(path) {
         Ok(file) => file,
@@ -120,6 +125,7 @@ fn main() -> Result<(), Error> {
         Some(Commands::Download {
             common,
             serial,
+            target,
             format,
             path,
             chip_erase,
@@ -128,6 +134,7 @@ fn main() -> Result<(), Error> {
         }) => download_program_fast(
             common,
             &serial,
+            &target,
             format,
             &path,
             chip_erase,
