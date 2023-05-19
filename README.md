@@ -16,7 +16,7 @@ The motivation behind these tools is that [probe-rs-cli](https://crates.io/crate
 $ probe-rs-cli info
 Error: 2 probes were found.
 ```
-So the plan is to implement a flasher where you can choose by serial number which device to use.
+With `rst-flash` you can choose by serial number which device to use.
 
 ## Installation from source
 
