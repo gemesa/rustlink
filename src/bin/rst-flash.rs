@@ -1,6 +1,9 @@
 use anyhow::{bail, Context, Error, Result};
 use clap::{Parser, Subcommand};
-use probe_rs::{flashing::FileDownloadError, Permissions, Probe};
+use probe_rs::{
+    flashing::{erase_all, FileDownloadError},
+    Permissions, Probe,
+};
 use probe_rs_cli_util::{
     common_options::{CargoOptions, FlashOptions, ProbeOptions},
     flash::run_flash_download,
@@ -65,6 +68,36 @@ enum Commands {
         #[clap(long = "disable-double-buffering")]
         disable_double_buffering: bool,
     },
+    /// Erase all nonvolatile memory of attached target
+    Erase {
+        /// Serial number of STLink
+        #[clap(short, long)]
+        serial: String,
+
+        /// Target chip
+        #[clap(short, long)]
+        target: String,
+    },
+}
+
+fn erase(serial: &str, target: &str) -> Result<()> {
+    let probes = Probe::list_all();
+
+    let probe = probes
+        .into_iter()
+        .find(|probe| probe.serial_number == Some(serial.to_owned()));
+
+    if probe.is_none() {
+        bail!("no STLink device found with serial number {}", serial)
+    }
+
+    let probe = probe.unwrap().open()?;
+
+    let mut session = probe.attach(target, Permissions::default())?;
+
+    erase_all(&mut session, None)?;
+
+    Ok(())
 }
 
 fn reset_target_of_device(serial: &str, target: &str, shared_options: &CoreOptions) -> Result<()> {
@@ -189,6 +222,7 @@ fn main() -> Result<(), Error> {
             enable_progressbars,
             disable_double_buffering,
         ),
+        Some(Commands::Erase { serial, target }) => erase(&serial, &target),
         None => bail!("unrecognized command"),
     }
 }
