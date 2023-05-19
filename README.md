@@ -16,7 +16,18 @@ The motivation behind these tools is that [probe-rs-cli](https://crates.io/crate
 $ probe-rs-cli info
 Error: 2 probes were found.
 ```
-With `rst-flash` you can choose by serial number which device to use.
+
+With `rst-flash` you can choose by serial number which device to use:
+
+```
+$ rst-info list
+[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
+$ rst-flash download YYYYYYYYYYYYYYYYYYYYYYYYYYYY STM32F103C8 app.elf
+     Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
+ Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
+    Finished in 0.209s      
+```
 
 ## Installation from source
 
@@ -39,15 +50,3 @@ $ cargo install --path .
 ```
 
 which will build `rst-info` and `rst-flash` executables and install them in `<your-home>/.cargo/bin/`.
-
-## Quickstart
-
-```
-$ rst-info list
-[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
-[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
-$ rst-flash download YYYYYYYYYYYYYYYYYYYYYYYYYYYY STM32F103C8 app.elf
-     Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
- Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
-    Finished in 0.209s      
-```
