@@ -57,15 +57,17 @@ fn download_program_fast(
     disable_progressbars: bool,
     disable_double_buffering: bool,
 ) -> Result<()> {
-    let mut probes = Probe::list_all();
+    let probes = Probe::list_all();
 
-    probes.retain(|probe| probe.serial_number == Some(serial.to_owned()));
+    let probe = probes
+        .into_iter()
+        .find(|probe| probe.serial_number == Some(serial.to_owned()));
 
-    if probes.is_empty() {
+    if probe.is_none() {
         bail!("no STLink device found with serial number {}", serial)
     }
 
-    let probe = probes[0].open()?;
+    let probe = probe.unwrap().open()?;
 
     let mut session = probe.attach("STM32F103C8", Permissions::default())?;
 
