@@ -49,3 +49,35 @@ $ cargo install --path .
 ```
 
 which will build `rst-info` and `rst-flash` executables and install them in `<your-home>/.cargo/bin/`.
+
+## Examples
+
+#### List STlink devices
+
+```
+$ rst-info list
+[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
+```
+
+#### Download to flash and run
+
+```
+$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
+    Finished in 0.179s
+$ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
+```
+
+#### Dump and erase memory
+
+```
+$ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf 
+    Finished in 0.191s
+$ rst-flash dump -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 0x0800_0000 1                   
+Addr 0x08000000: 0x20005000
+Read 1 words in 498.057µs
+$ rst-flash erase -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
+$ rst-flash dump -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 0x0800_0000 1
+Addr 0x08000000: 0xffffffff
+Read 1 words in 473.943µs
+```
