@@ -81,3 +81,14 @@ $ rst-flash dump -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 0x0800_0000 1
 Addr 0x08000000: 0xffffffff
 Read 1 words in 473.943µs
 ```
+
+### Get chip info
+
+```
+$ probe-rs-cli chip info STM32F103C8
+STM32F103C8
+Cores (1):
+    - main (Armv7m)
+RAM: 0x20000000..0x20005000 (20.00 KiB)
+NVM: 0x08000000..0x08010000 (64.00 KiB)
+```
