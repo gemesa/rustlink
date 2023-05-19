@@ -37,5 +37,5 @@ which will build `rst-info` and `rst-flash` executables and install them in `<yo
 
 ```
 $ rst-info list
-[0]: STLink V2 - serial: 0123456789ABCDEF0123456789AB
+[0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
 ```
