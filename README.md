@@ -25,6 +25,7 @@ $ rst-info list
 [1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
 $ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf -q 
     Finished in 0.179s
+$ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
 ```
 
 or if you want a progress bar:
@@ -36,7 +37,8 @@ $ rst-info list
 $ rst-flash download -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8 -f app.elf
      Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
  Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
-    Finished in 0.209s      
+    Finished in 0.209s
+$ rst-flash reset -s YYYYYYYYYYYYYYYYYYYYYYYYYYYY -t STM32F103C8
 ```
 
 ## Installation from source

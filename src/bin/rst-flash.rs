@@ -19,6 +19,19 @@ struct Cli {
 
 #[derive(Subcommand)]
 enum Commands {
+    /// Resets the target attached to the selected debug probe
+    Reset {
+        /// Serial number of STLink
+        #[clap(short, long)]
+        serial: String,
+
+        /// Target chip
+        #[clap(short, long)]
+        target: String,
+
+        #[clap(flatten)]
+        shared: CoreOptions,
+    },
     /// Download memory to attached target
     Download {
         #[clap(flatten)]
@@ -52,6 +65,26 @@ enum Commands {
         #[clap(long = "disable-double-buffering")]
         disable_double_buffering: bool,
     },
+}
+
+fn reset_target_of_device(serial: &str, target: &str, shared_options: &CoreOptions) -> Result<()> {
+    let probes = Probe::list_all();
+
+    let probe = probes
+        .into_iter()
+        .find(|probe| probe.serial_number == Some(serial.to_owned()));
+
+    if probe.is_none() {
+        bail!("no STLink device found with serial number {}", serial)
+    }
+
+    let probe = probe.unwrap().open()?;
+
+    let mut session = probe.attach(target, Permissions::default())?;
+
+    session.core(shared_options.core)?.reset()?;
+
+    Ok(())
 }
 
 #[allow(clippy::too_many_arguments)]
@@ -121,10 +154,22 @@ enum DownloadFileType {
     Hex,
 }
 
+/// Shared options for core selection, shared between commands
+#[derive(clap::Parser)]
+pub(crate) struct CoreOptions {
+    #[clap(long, default_value = "0")]
+    core: usize,
+}
+
 fn main() -> Result<(), Error> {
     let cli = Cli::parse();
 
     match cli.command {
+        Some(Commands::Reset {
+            serial,
+            target,
+            shared,
+        }) => reset_target_of_device(&serial, &target, &shared),
         Some(Commands::Download {
             common,
             serial,
