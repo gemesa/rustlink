@@ -6,7 +6,7 @@
 [![Shellcheck CI](https://github.com/gemesa/rustlink/actions/workflows/shellcheck.yml/badge.svg?event=push)](https://github.com/gemesa/rustlink/actions/workflows/shellcheck.yml)
 
 rustlink is a set of tools to program STM32 devices:
-- `rst-info`: chip and device information tool
+- `rst-info`: device information tool
 - `rst-flash`: programmer and flash manipulation tool
 
 <!-- markdown-link-check-disable-next-line -->

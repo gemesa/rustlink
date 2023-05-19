@@ -5,7 +5,7 @@ use probe_rs::Probe;
 const VENDOR_ID_ST: u16 = 0x0483;
 const PRODUCT_ID_STLINK: u16 = 0x3748;
 
-/// Chip and device information tool
+/// Device information tool
 
 #[derive(Parser)]
 #[command(author, version, about, long_about = None)]
