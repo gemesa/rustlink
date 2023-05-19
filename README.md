@@ -47,4 +47,10 @@ which will build `rst-info` and `rst-flash` executables and install them in `<yo
 ```
 $ rst-info list
 [0]: STLink V2 - serial: XXXXXXXXXXXXXXXXXXXXXXXXXXXX
+[1]: STLink V2 - serial: YYYYYYYYYYYYYYYYYYYYYYYYYYYY
+$ rst-flash download YYYYYYYYYYYYYYYYYYYYYYYYYYYY STM32F103C8 app.elf
+     Erasing sectors ✔ [00:00:00] [########################################################################################################] 1.00 KiB/1.00 KiB @ 16.57 KiB/s (eta 0s )
+ Programming pages   ✔ [00:00:00] [#########################################################################################################] 1.00 KiB/1.00 KiB @ 9.87 KiB/s (eta 0s )
+    Finished in 0.209s
+      
 ```
