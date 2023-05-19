@@ -2,7 +2,7 @@ use anyhow::{bail, Context, Error, Result};
 use clap::{Parser, Subcommand};
 use probe_rs::{
     flashing::{erase_all, FileDownloadError},
-    MemoryInterface, Permissions, Probe,
+    DebugProbeInfo, MemoryInterface, Permissions, Probe,
 };
 use probe_rs_cli_util::{
     common_options::{CargoOptions, FlashOptions, ProbeOptions},
@@ -101,7 +101,7 @@ enum Commands {
     },
 }
 
-fn erase(serial: &str, target: &str) -> Result<()> {
+fn get_stlink_probe(serial: &str) -> Result<DebugProbeInfo, Error> {
     let probes = Probe::list_all();
 
     let probe = probes
@@ -111,6 +111,13 @@ fn erase(serial: &str, target: &str) -> Result<()> {
     if probe.is_none() {
         bail!("no STLink device found with serial number {}", serial)
     }
+
+    let probe = probe.unwrap();
+    Ok(probe)
+}
+
+fn erase(serial: &str, target: &str) -> Result<()> {
+    let probe = get_stlink_probe(serial);
 
     let probe = probe.unwrap().open()?;
 
@@ -122,15 +129,7 @@ fn erase(serial: &str, target: &str) -> Result<()> {
 }
 
 fn reset_target_of_device(serial: &str, target: &str, shared_options: &CoreOptions) -> Result<()> {
-    let probes = Probe::list_all();
-
-    let probe = probes
-        .into_iter()
-        .find(|probe| probe.serial_number == Some(serial.to_owned()));
-
-    if probe.is_none() {
-        bail!("no STLink device found with serial number {}", serial)
-    }
+    let probe = get_stlink_probe(serial);
 
     let probe = probe.unwrap().open()?;
 
@@ -148,15 +147,7 @@ fn dump_memory(
     loc: u64,
     words: u32,
 ) -> Result<()> {
-    let probes = Probe::list_all();
-
-    let probe = probes
-        .into_iter()
-        .find(|probe| probe.serial_number == Some(serial.to_owned()));
-
-    if probe.is_none() {
-        bail!("no STLink device found with serial number {}", serial)
-    }
+    let probe = get_stlink_probe(serial);
 
     let probe = probe.unwrap().open()?;
 
@@ -200,15 +191,7 @@ fn download_program_fast(
     enable_progressbars: bool,
     disable_double_buffering: bool,
 ) -> Result<()> {
-    let probes = Probe::list_all();
-
-    let probe = probes
-        .into_iter()
-        .find(|probe| probe.serial_number == Some(serial.to_owned()));
-
-    if probe.is_none() {
-        bail!("no STLink device found with serial number {}", serial)
-    }
+    let probe = get_stlink_probe(serial);
 
     let probe = probe.unwrap().open()?;
 
