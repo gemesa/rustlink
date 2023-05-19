@@ -57,9 +57,9 @@ enum Commands {
         #[clap(long)]
         chip_erase: bool,
 
-        /// Whether to disable fancy progress reporting
-        #[clap(short = 'q', long)]
-        disable_progressbars: bool,
+        /// Whether to enable fancy progress reporting
+        #[clap(long)]
+        enable_progressbars: bool,
 
         /// Disable double-buffering when downloading flash.  If downloading times out, try this option.
         #[clap(long = "disable-double-buffering")]
@@ -95,7 +95,7 @@ fn download_program_fast(
     format: DownloadFileType,
     path: &str,
     do_chip_erase: bool,
-    disable_progressbars: bool,
+    enable_progressbars: bool,
     disable_double_buffering: bool,
 ) -> Result<()> {
     let probes = Probe::list_all();
@@ -130,7 +130,7 @@ fn download_program_fast(
         &FlashOptions {
             list_chips: false,
             list_probes: false,
-            disable_progressbars,
+            disable_progressbars: !enable_progressbars,
             disable_double_buffering,
             reset_halt: false,
             log: None,
@@ -177,7 +177,7 @@ fn main() -> Result<(), Error> {
             format,
             path,
             chip_erase,
-            disable_progressbars,
+            enable_progressbars,
             disable_double_buffering,
         }) => download_program_fast(
             common,
@@ -186,7 +186,7 @@ fn main() -> Result<(), Error> {
             format,
             &path,
             chip_erase,
-            disable_progressbars,
+            enable_progressbars,
             disable_double_buffering,
         ),
         None => bail!("unrecognized command"),
