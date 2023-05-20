@@ -86,7 +86,7 @@ enum Commands {
         enable_progressbars: bool,
 
         /// Disable double-buffering when downloading flash.  If downloading times out, try this option.
-        #[clap(long = "disable-double-buffering")]
+        #[clap(long)]
         disable_double_buffering: bool,
     },
     /// Erase all nonvolatile memory of attached target
